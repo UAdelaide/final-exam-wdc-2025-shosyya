@@ -4,7 +4,7 @@ const app = express();
 
 app.use(express.json());
 
-// /api/dogs
+// Return a list of all dogs with their size and owner's username
 app.get('/api/dogs', async (req, res) => {
   try {
     const [rows] = await db.execute(`
@@ -14,17 +14,17 @@ app.get('/api/dogs', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Could not load dogs list' });
+    console.error("load dogs err", err);
+    res.status(500).json({ error: 'failed to load dog list' });
   }
 });
 
-// /api/walkrequests/open
+// Return all open walk requests, including the dog name, requested time, location, and owner's username
 app.get('/api/walkrequests/open', async (req, res) => {
   try {
     const [rows] = await db.execute(`
       SELECT wr.request_id, d.name AS dog_name, wr.requested_time,
-             wr.duration_minutes, wr.location, u.username AS owner_username
+      wr.duration_minutes, wr.location, u.username AS owner_username
       FROM WalkRequests wr
       JOIN Dogs d ON wr.dog_id = d.dog_id
       JOIN Users u ON d.owner_id = u.user_id
@@ -32,20 +32,20 @@ app.get('/api/walkrequests/open', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Could not get open walk requests' });
+    console.log("walk req err", err);
+    res.status(500).json({ error: "failed to load open walks" });
   }
 });
 
-// /api/walkers/summary
+// Return a summary of each walker with their average rating and number of completed walks
 app.get('/api/walkers/summary', async (req, res) => {
   try {
     const [rows] = await db.execute(`
       SELECT
-        u.username AS walker_username,
-        COUNT(DISTINCT r.rating_id) AS total_ratings,
-        ROUND(AVG(r.rating), 1) AS average_rating,
-        COUNT(DISTINCT wr.request_id) AS completed_walks
+      u.username AS walker_username,
+      COUNT(DISTINCT r.rating_id) AS total_ratings,
+      ROUND(AVG(r.rating), 1) AS average_rating,
+      COUNT(DISTINCT wr.request_id) AS completed_walks
       FROM Users u
       LEFT JOIN WalkApplications wa ON u.user_id = wa.walker_id
       LEFT JOIN WalkRequests wr ON wa.request_id = wr.request_id AND wr.status = 'accepted'
@@ -55,12 +55,12 @@ app.get('/api/walkers/summary', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Could not load walker summary' });
+    console.error("summary fail", err);
+    res.status(500).json({ error: "failed walker summary" });
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`API running on http://localhost:${PORT}`);
+
+app.listen(8080, () => {
+  console.log('listening on port 8080');
 });
