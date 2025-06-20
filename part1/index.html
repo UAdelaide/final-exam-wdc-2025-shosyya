@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DOG SALVATION ZONE</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <style>
+    body {
+      background-image: url("https://upload.wikimedia.org/wikipedia/commons/5/51/Co-Uniform_Wallpaper_Example_p1.svg");
+      background-repeat: repeat;
+      font-family: "Comic Sans MS", cursive;
+      color: navy;
+      text-align: center;
+    }
+
+    h1 {
+      background-color: black;
+      color: darkblue;
+      font-size: 50px;
+      padding: 15px;
+      margin: 0;
+    }
+
+    .verse {
+      background-color: lime;
+      color: green;
+      font-weight: bold;
+      font-size: 1.4rem;
+      border: 4px dotted pink;
+      margin: 20px;
+      padding: 10px;
+    }
+
+    .dog-img {
+      border: 6px double yellow;
+      margin-top: 15px;
+      width: 400px;
+      height: 300px;
+    }
+
+    button {
+      background-color: purple;
+      color: red;
+      border: 4px groove blue;
+      font-size: 1.2rem;
+      padding: 10px 20px;
+      margin: 20px;
+    }
+
+    .footer {
+      background-color: yellow;
+      padding: 10px;
+      font-size: 1rem;
+      color: black;
+      border-top: 3px dashed red;
+    }
+  </style>
+</head>
+<body>
+  <h1>WELCOME TO DOG SALVATION</h1>
+
+  <div class="verse">
+    For the wages of sin is bark;<br>
+    but the gift of Dog is eternal licks.<br>
+    - Doggo 6:66
+  </div>
+
+  <div id="app">
+    <img class="dog-img" :src="dogImage" alt="Blessed dog of the day">
+    <br>
+    <button @click="fetchDog">REVEAL ANOTHER CHOSEN DOG</button>
+  </div>
+
+  <div class="footer">
+    <p>Best viewed at 640x480 with AOL Browser.</p>
+    <p>© 1999 Dog Faith Temple</p>
+  </div>
+
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          dogImage: ''
+        };
+      },
+      mounted() {
+        this.fetchDog();
+      },
+      methods: {
+        fetchDog() {
+          fetch('https://dog.ceo/api/breeds/image/random')
+            .then(res => res.json())
+            .then(data => {
+              this.dogImage = data.message;
+            })
+            .catch(() => {
+              this.dogImage = '';
+            });
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
