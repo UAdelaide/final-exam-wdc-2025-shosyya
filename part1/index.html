@@ -3,31 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <title>DOG</title>
+
   <script src="https://unpkg.com/vue@3"></script>
+
   <style>
-    body {
-      background-image: url("https://upload.wikimedia.org/wikipedia/commons/5/51/Co-Uniform_Wallpaper_Example_p1.svg");
-      background-repeat: repeat;
-	  text-align: right;
-    }
+	body {
+  	background-image: url("https://upload.wikimedia.org/wikipedia/commons/5/51/Co-Uniform_Wallpaper_Example_p1.svg");
+  	background-repeat: repeat;
+  	text-align: right;
+	}
 
-    h1 {
-      background-color: black;
-      color: darkblue;
-      font-family: "Comic Sans MS";
-      text-align: center;
-      font-size: 50px;
-      padding: 15px;
-      margin: 0;
-    }
+	h1 {
+  	background-color: black;
+  	color: darkblue;
+  	font-family: "Papyrus";
+  	text-align: center;
+  	font-size: 50px;
+  	padding: 15px;
+  	margin: 0;
+	}
 
-    button {
-      background-color: white;
-      color: red;
-      font-size: 50px;
-      padding: 10px 10px;
-	  margin: 150px;
-    }
+	button {
+  	background-color: white;
+  	color: red;
+  	font-size: 50px;
+  	padding: 10px 10px;
+  	margin: 150px;
+	}
   </style>
 
 </head>
@@ -35,34 +37,35 @@
   <h1>DOG PAGE</h1>
 
   <div id="app">
-    <img class="dog-img" :src="dogImage">
-    <br>
-    <button @click="fetchDog">BUTTON</button>
+	<img class="dog-img" :src="dogImage">
+	<br>
+	<button @click="fetchDog">BUTTON</button>
   </div>
 
   <script>
-    Vue.createApp({
-      data() {
-        return {
-          dogImage: ''
-        };
-      },
-      mounted() {
-        this.fetchDog();
-      },
-      methods: {
-        fetchDog() {
-          fetch('https://dog.ceo/api/breeds/image/random')
-            .then(res => res.json())
-            .then(data => {
-              this.dogImage = data.message;
-            })
-            .catch(() => {
-              this.dogImage = '';
-            });
-        }
-      }
-    }).mount('#app');
+	Vue.createApp({
+  	data() {
+    	return {
+      	dogImage: ''
+    	};
+  	},
+  	mounted() {
+    	this.fetchDog();
+  	},
+  	methods: {
+    	fetchDog() {
+      	fetch('https://dog.ceo/api/breeds/image/random')
+        	.then(res => res.json())
+        	.then(data => {
+          	this.dogImage = data.message;
+        	})
+        	.catch(() => {
+          	this.dogImage = '';
+        	});
+    	}
+  	}
+	}).mount('#app');
   </script>
+
 </body>
 </html>
