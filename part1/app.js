@@ -14,7 +14,7 @@ app.get('/api/dogs', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    console.error("load dogs err", err);
+    console.error("dogs error", err);
     res.status(500).json({ error: 'failed to load dog list' });
   }
 });
