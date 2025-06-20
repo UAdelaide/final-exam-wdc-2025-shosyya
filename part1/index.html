@@ -2,107 +2,61 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🔥 DOG ZONE 3000 🔥</title>
+  <title>!! DOG OF THE DAY !!</title>
   <script src="https://unpkg.com/vue@3"></script>
   <style>
-    body {
-      margin: 0;
-      background: url('https://media.giphy.com/media/l41Yh92i93Y3xC2s4/giphy.gif') repeat;
-      color: #00FFEF;
-      font-family: 'Comic Sans MS', cursive;
-      text-align: center;
-      overflow-x: hidden;
-    }
-
-    h1 {
-      font-size: 60px;
-      background: linear-gradient(to right, red, yellow, green, cyan, blue, magenta);
-      -webkit-background-clip: text;
-      color: transparent;
-      text-shadow: 3px 3px black;
-      animation: flicker 1s infinite alternate;
-    }
-
-    @keyframes flicker {
-      from { opacity: 1; }
-      to { opacity: 0.7; transform: scale(1.01); }
-    }
-
-    .warning-banner {
-      background-color: yellow;
-      color: black;
-      font-weight: bold;
-      font-size: 1.5rem;
-      padding: 5px;
-      border-top: 5px dashed red;
-      border-bottom: 5px dashed red;
-    }
-
-    marquee {
-      font-size: 2rem;
-      color: red;
-      background: black;
-      font-weight: bold;
-    }
-
-    button {
-      font-size: 2rem;
-      padding: 15px 30px;
-      margin-top: 20px;
-      color: lime;
-      background: linear-gradient(45deg, black, red);
-      border: 5px double yellow;
-      cursor: crosshair;
-      animation: pulse 1s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-
-    img {
-      border: 10px groove hotpink;
-      margin: 20px auto;
-      box-shadow: 0px 0px 30px cyan;
-    }
+	body {
+  	background: repeating-linear-gradient(45deg, lime, pink, orange, lime 10px);
+  	color: cyan;
+  	font-family: Papyrus, Comic Sans MS, cursive;
+  	text-align: center;
+	}
+	h1 {
+  	font-size: 50px;
+  	text-shadow: 2px 2px red;
+	}
+	button {
+  	font-size: 2rem;
+  	padding: 20px;
+  	animation: flash 0.5s infinite alternate;
+	}
+	@keyframes flash {
+  	from { color: black; background: yellow; }
+  	to { color: yellow; background: red; }
+	}
   </style>
 </head>
 <body>
-  <div class="warning-banner">WARNING: TOO MUCH DOG ENERGY</div>
-  <marquee behavior="alternate" scrollamount="20">DOG ZONE ENTERED — ABANDON ALL UX</marquee>
-
   <div id="app">
-    <h1>✨ DOG OF THE CHAOS DIMENSION ✨</h1>
-    <img :src="dogImage" width="500" height="400" alt="dog of chaos">
-    <br>
-    <button @click="fetchDog">UNLEASH MORE DOGS</button>
+	<h1>LOOK AT THIS DOG 🐶!!!</h1>
+	<img :src="dogImage" width="500" height="400">
+	<br><br>
+	<button @click="fetchDog">MORE DOGS!!</button>
   </div>
 
   <script>
-    Vue.createApp({
-      data() {
-        return {
-          dogImage: ''
-        };
-      },
-      mounted() {
-        this.fetchDog();
-      },
-      methods: {
-        fetchDog() {
-          fetch('https://dog.ceo/api/breeds/image/random')
-            .then(res => res.json())
-            .then(data => {
-              this.dogImage = data.message;
-            })
-            .catch(() => {
-              this.dogImage = '';
-            });
-        }
-      }
-    }).mount('#app');
+	Vue.createApp({
+  	data() {
+    	return {
+      	dogImage: ''
+    	};
+  	},
+  	mounted() {
+    	this.fetchDog();
+  	},
+  	methods: {
+    	fetchDog() {
+      	fetch('https://dog.ceo/api/breeds/image/random')
+        	.then(res => res.json())
+        	.then(data => {
+          	this.dogImage = data.message;
+        	})
+        	.catch(() => {
+          	this.dogImage = '';
+        	});
+    	}
+  	}
+	}).mount('#app');
   </script>
 </body>
 </html>
