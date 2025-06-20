@@ -14,7 +14,7 @@ app.get('/api/dogs', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    console.error("dogs error", err);
+    console.error("load dogs error", err);
     res.status(500).json({ error: 'failed to load dog list' });
   }
 });
@@ -55,11 +55,10 @@ app.get('/api/walkers/summary', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    console.error("summary fail", err);
+    console.error("summary error", err);
     res.status(500).json({ error: "failed walker summary" });
   }
 });
-
 
 app.listen(8080, () => {
   console.log('listening on port 8080');
