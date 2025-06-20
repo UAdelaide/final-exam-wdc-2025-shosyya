@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>!! DOG OF THE DAY !!</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <style>
+	body {
+  	background: repeating-linear-gradient(45deg, lime, pink, orange, lime 10px);
+  	color: cyan;
+  	font-family: Papyrus, Comic Sans MS, cursive;
+  	text-align: center;
+	}
+	h1 {
+  	font-size: 50px;
+  	text-shadow: 2px 2px red;
+	}
+	button {
+  	font-size: 2rem;
+  	padding: 20px;
+  	animation: flash 0.5s infinite alternate;
+	}
+	@keyframes flash {
+  	from { color: black; background: yellow; }
+  	to { color: yellow; background: red; }
+	}
+  </style>
+</head>
+<body>
+  <div id="app">
+	<h1>LOOK AT THIS DOG 🐶!!!</h1>
+	<img :src="dogImage" width="500" height="400">
+	<br><br>
+	<button @click="fetchDog">MORE DOGS!!</button>
+  </div>
+
+  <script>
+	Vue.createApp({
+  	data() {
+    	return {
+      	dogImage: ''
+    	};
+  	},
+  	mounted() {
+    	this.fetchDog();
+  	},
+  	methods: {
+    	fetchDog() {
+      	fetch('https://dog.ceo/api/breeds/image/random')
+        	.then(res => res.json())
+        	.then(data => {
+          	this.dogImage = data.message;
+        	})
+        	.catch(() => {
+          	this.dogImage = '';
+        	});
+    	}
+  	}
+	}).mount('#app');
+  </script>
+</body>
+</html>
