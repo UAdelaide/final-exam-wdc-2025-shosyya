@@ -32,7 +32,7 @@ app.get('/api/walkrequests/open', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    console.log("walk req err", err);
+    console.log("walk request error", err);
     res.status(500).json({ error: "failed to load open walks" });
   }
 });
