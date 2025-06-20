@@ -2,61 +2,112 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>!! DOG OF THE DAY !!</title>
+  <title>Dog World Salvation</title>
   <script src="https://unpkg.com/vue@3"></script>
   <style>
-	body {
-  	background: repeating-linear-gradient(45deg, lime, pink, orange, lime 10px);
-  	color: cyan;
-  	font-family: Papyrus, Comic Sans MS, cursive;
-  	text-align: center;
-	}
-	h1 {
-  	font-size: 50px;
-  	text-shadow: 2px 2px red;
-	}
-	button {
-  	font-size: 2rem;
-  	padding: 20px;
-  	animation: flash 0.5s infinite alternate;
-	}
-	@keyframes flash {
-  	from { color: black; background: yellow; }
-  	to { color: yellow; background: red; }
-	}
+    body {
+      background: repeating-linear-gradient(
+        to right,
+        red,
+        orange 20px,
+        yellow 40px,
+        green 60px,
+        cyan 80px,
+        blue 100px,
+        purple 120px
+      );
+      font-family: "Comic Sans MS", cursive;
+      color: navy;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 60px;
+      color: darkblue;
+      background-color: black;
+      padding: 10px;
+      margin: 0;
+    }
+
+    .verse {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: green;
+      background-color: lime;
+      padding: 10px;
+      border: 3px dashed pink;
+      margin: 20px;
+    }
+
+    .dog-img {
+      border: 8px double yellow;
+      margin: 15px auto;
+      width: 60%;
+    }
+
+    button {
+      font-size: 1.5rem;
+      background-color: purple;
+      color: red;
+      padding: 15px;
+      border: 5px groove blue;
+      margin-top: 20px;
+      width: 300px;
+    }
+
+    .footer {
+      background-color: yellow;
+      color: black;
+      padding: 10px;
+      font-size: 1.2rem;
+      margin-top: 40px;
+      border-top: 5px dotted red;
+    }
   </style>
 </head>
 <body>
+  <h1>DOG OF THE DAY (but salvation first)</h1>
+
+  <div class="verse">
+    For the wages of sin is death;<br>
+    but the gift of DOG is eternal floof.<br>
+    - Dogman 3:16
+  </div>
+
   <div id="app">
-	<h1>LOOK AT THIS DOG 🐶!!!</h1>
-	<img :src="dogImage" width="500" height="400">
-	<br><br>
-	<button @click="fetchDog">MORE DOGS!!</button>
+    <img class="dog-img" :src="dogImage" alt="dog image">
+    <br>
+    <button @click="fetchDog">SHOW ANOTHER BLESSED DOG</button>
+  </div>
+
+  <div class="footer">
+    This website best viewed on Netscape Navigator.<br>
+    All rights reserved, Dog Church International © 1998
   </div>
 
   <script>
-	Vue.createApp({
-  	data() {
-    	return {
-      	dogImage: ''
-    	};
-  	},
-  	mounted() {
-    	this.fetchDog();
-  	},
-  	methods: {
-    	fetchDog() {
-      	fetch('https://dog.ceo/api/breeds/image/random')
-        	.then(res => res.json())
-        	.then(data => {
-          	this.dogImage = data.message;
-        	})
-        	.catch(() => {
-          	this.dogImage = '';
-        	});
-    	}
-  	}
-	}).mount('#app');
+    Vue.createApp({
+      data() {
+        return {
+          dogImage: ''
+        };
+      },
+      mounted() {
+        this.fetchDog();
+      },
+      methods: {
+        fetchDog() {
+          fetch('https://dog.ceo/api/breeds/image/random')
+            .then(res => res.json())
+            .then(data => {
+              this.dogImage = data.message;
+            })
+            .catch(() => {
+              this.dogImage = '';
+            });
+        }
+      }
+    }).mount('#app');
   </script>
 </body>
 </html>
