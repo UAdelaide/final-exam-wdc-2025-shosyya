@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db');
+const db = require('../models/db');
 
 // homepage with login form
 router.get('/', (req, res) => {
