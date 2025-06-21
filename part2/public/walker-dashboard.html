@@ -10,6 +10,9 @@
 <body class="bg-light">
   <div id="app" class="container py-4">
     <h1 class="mb-4 text-success">Walker Dashboard</h1>
+    <form action="/logout" method="get" class="mb-3">
+      <button type="submit" class="btn btn-outline-danger">Log Out</button>
+    </form>
 
     <!-- Alert messages -->
     <div v-if="message" class="alert alert-info">{{ message }}</div>
