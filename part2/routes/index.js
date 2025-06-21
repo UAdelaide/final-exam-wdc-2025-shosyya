@@ -4,7 +4,7 @@ const db = require('../models/db');
 
 // homepage with login form
 router.get('/', (req, res) => {
-  res.render('index');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // process login form
