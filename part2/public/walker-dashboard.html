@@ -36,56 +36,73 @@
   </div>
 
   <script>
-    const { createApp, ref, onMounted } = Vue;
+const { createApp, ref, onMounted } = Vue;
 
-    createApp({
-      setup() {
-        const walks = ref([]);
-        const message = ref('');
-        const error = ref('');
-        const user = 3;
+createApp({
+  setup() {
+    const usr = ref(null)
+    const error = ref('')
+    const msg = ref('')
+    const requests = ref([])
 
-        async function loadWalkRequests() {
-          try {
-            const res = await fetch('/api/walks');
-            if (!res.ok) throw new Error('Failed to load walk requests');
-            walks.value = await res.json();
-          } catch (err) {
-            error.value = err.message;
-          }
-        }
-
-        async function applyToWalk(requestId) {
-          try {
-            const res = await fetch(`/api/walks/${requestId}/apply`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ walker_id: user })
-            });
-            const result = await res.json();
-
-            if (!res.ok) throw new Error(result.error || 'Application failed');
-            message.value = result.message;
-            error.value = '';
-            await loadWalkRequests();
-          } catch (err) {
-            error.value = err.message;
-            message.value = '';
-          }
-        }
-
-        onMounted(() => {
-          loadWalkRequests();
-        });
-
-        return {
-          walks,
-          message,
-          error,
-          applyToWalk
-        };
+    // fetch logged in user
+    async function getUser() {
+      try {
+        const res = await fetch('/api/users/me')
+        if (!res.ok) throw new Error('failed to get user')
+        usr.value = await res.json()
+      } catch (err) {
+        console.log('user fetch err:', err)
+        error.value = 'could not get user'
       }
-    }).mount('#app');
+    }
+
+    // apply to walk request
+    async function applyToWalk(id) {
+      try {
+        const res = await fetch('/api/apply', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            walker_id: usr.value.user_id,
+            walk_request_id: id
+          })
+        })
+
+        if (!res.ok) throw new Error('apply fail')
+        msg.value = 'applied'
+      } catch (err) {
+        console.log('apply error:', err)
+        error.value = 'could not apply'
+      }
+    }
+
+    // get walk requests
+    async function getWalks() {
+      try {
+        const res = await fetch('/api/walks/open')
+        requests.value = await res.json()
+      } catch (err) {
+        error.value = 'walks load error'
+      }
+    }
+
+    // on load
+    onMounted(() => {
+      getUser()
+      getWalks()
+    })
+
+    return {
+      requests,
+      applyToWalk,
+      error,
+      msg
+    }
+  }
+}).mount('#app')
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
