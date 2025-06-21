@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-/* Login logic */
+/* Login form HTML */
 npm install<form method="POST" action="/login">
   <label>Username:</label>
   <input type="text" name="username" required><br>
