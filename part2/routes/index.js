@@ -29,13 +29,12 @@ router.post('/login', async (req, res) => {
       };
 
       if (rows[0].role === 'owner') {
-        res.redirect('/owner-dashboard');
+        res.redirect('/owner-dashboard.html');
       } else if (rows[0].role === 'walker') {
-        res.redirect('/walker-dashboard');
+        res.redirect('/walker-dashboard.html');
+      } else {
+        res.status(403).send('Invalid role');
       }
-    } else {
-      res.send('Wrong username or password');
-    }
   } catch (err) {
     console.log('error with login:', err);
     res.status(500).send('error with login');
