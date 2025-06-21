@@ -14,9 +14,6 @@ app.use(session({
   saveUninitialized: false
 }));
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
 const walkRoutes = require('./routes/walkRoutes');
 const userRoutes = require('./routes/userRoutes');
 const indexRoutes = require('./routes/index'); //
