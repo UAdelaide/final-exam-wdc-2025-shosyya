@@ -59,4 +59,21 @@ router.post('/:id/apply', async (req, res) => {
   }
 });
 
+router.get('/open', async (req, res) => {
+  try {
+    const [rows] = await db.execute(`
+      SELECT wr.*, d.name AS dog_name, d.size, u.username AS owner_name
+      FROM WalkRequests wr
+      JOIN Dogs d ON wr.dog_id = d.dog_id
+      JOIN Users u ON d.owner_id = u.user_id
+      WHERE wr.status = 'open'
+    `);
+    res.json(rows);
+  } catch (error) {
+    console.error('SQL Error (GET /open):', error);
+    res.status(500).json({ error: 'Failed to fetch open walk requests' });
+  }
+});
+
+
 module.exports = router;
