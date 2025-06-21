@@ -16,13 +16,12 @@ app.use(session({
 
 const walkRoutes = require('./routes/walkRoutes');
 const userRoutes = require('./routes/userRoutes');
-const indexRoutes = require('./routes/index'); //
+const indexRoutes = require('./routes/index');
 
 app.use('/', indexRoutes);
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
 
-// Static files come last so / doesn't get hijacked by index.html
 app.use(express.static(path.join(__dirname, 'public')));
 
 module.exports = app;
