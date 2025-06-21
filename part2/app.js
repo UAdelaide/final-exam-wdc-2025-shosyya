@@ -7,19 +7,17 @@ const app = express();
 
 app.use('/', require('./routes/index'));
 
-// Middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
-// Session
+// session
 app.use(session({
   secret: 'secretkey',
   resave: false,
   saveUninitialized: false
 }));
 
-// Serve Views
+// serve Views
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
