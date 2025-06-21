@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-// Homepage
+// homepage with login form
 router.get('/', (req, res) => {
   res.render('index');
 });
 
-// Login
+// process login form
 router.post('/login', async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -40,7 +40,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Logout
+// logout
 router.get('/logout', (req, res) => {
   req.session.destroy(err => {
     if (err) {
@@ -53,7 +53,7 @@ router.get('/logout', (req, res) => {
   });
 });
 
-// Dashboard: Owner
+// dashboard - owner
 router.get('/owner-dashboard', async (req, res) => {
   const ownerId = req.session.user.user_id;
 
@@ -73,14 +73,14 @@ router.get('/owner-dashboard', async (req, res) => {
   }
 });
 
-// Dashboard: Walker
+// dashboard - walker
 router.get('/walker-dashboard', (req, res) => {
   res.render('walker-dashboard', {
     username: req.session.user.username
   });
 });
 
-// Current user session info for API
+// get current user for API
 router.get('/api/users/me', (req, res) => {
   if (!req.session.user) {
     res.status(401).json({ error: 'Not logged in' });
