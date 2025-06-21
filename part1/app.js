@@ -7,7 +7,7 @@ app.use(express.json());
 // Return a list of all dogs with their size and owner's username
 app.get('/api/dogs', async (req, res) => {
   try {
-    const [rows] = await db.execute(`
+    const [rows] = await db.query(`
       SELECT Dogs.name AS dog_name, Dogs.size, Users.username AS owner_username
       FROM Dogs
       JOIN Users ON Dogs.owner_id = Users.user_id
@@ -22,7 +22,7 @@ app.get('/api/dogs', async (req, res) => {
 // Return all open walk requests, including the dog name, requested time, location, and owner's username
 app.get('/api/walkrequests/open', async (req, res) => {
   try {
-    const [rows] = await db.execute(`
+    const [rows] = await db.query(`
       SELECT wr.request_id, d.name AS dog_name, wr.requested_time,
       wr.duration_minutes, wr.location, u.username AS owner_username
       FROM WalkRequests wr
@@ -40,7 +40,7 @@ app.get('/api/walkrequests/open', async (req, res) => {
 // Return a summary of each walker with their average rating and number of completed walks
 app.get('/api/walkers/summary', async (req, res) => {
   try {
-    const [rows] = await db.execute(`
+    const [rows] = await db.query(`
       SELECT
       u.username AS walker_username,
       COUNT(DISTINCT r.rating_id) AS total_ratings,
