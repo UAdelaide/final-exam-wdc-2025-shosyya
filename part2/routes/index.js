@@ -48,7 +48,7 @@ router.get('/logout', (req, res) => {
       res.status(500).send('error with logout');
     } else {
       res.clearCookie('connect.sid');
-      res.redirect('/');
+      res.redirect('/index.html');
     }
   });
 });
