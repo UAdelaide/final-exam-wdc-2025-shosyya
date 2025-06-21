@@ -10,20 +10,19 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
-const walkRoutes = require('./routes/walkRoutes');
-const userRoutes = require('./routes/userRoutes');
-
-app.use('/api/walks', walkRoutes);
-app.use('/api/users', userRoutes);
-
-// Sessions
+// Session
 app.use(session({
   secret: 'secretkey',
   resave: false,
   saveUninitialized: false
 }));
 
+// Routes
+const walkRoutes = require('./routes/walkRoutes');
+const userRoutes = require('./routes/userRoutes');
+
+app.use('/api/walks', walkRoutes);
+app.use('/api/users', userRoutes);
 
 
 // Export the app instead of listening here
