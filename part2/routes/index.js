@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-
 // process login form
 router.post('/login', async (req, res) => {
   const username = req.body.username;
@@ -33,7 +32,7 @@ router.post('/login', async (req, res) => {
       } else if (rows[0].role === 'walker') {
         res.redirect('/walker-dashboard.html');
       } else {
-        res.status(403).send('Invalid role');
+        res.status(403).send('invalid role');
       }
   } catch (err) {
     console.log('error with login:', err);
