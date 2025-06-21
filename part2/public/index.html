@@ -10,20 +10,57 @@
 <body class="bg-light">
 
   <div id="app" class="container py-5">
-    <h1 class="mb-4 text-primary">{{ message }}</h1>
+    <h1 class="mb-4 text-primary">Registered Dogs</h1>
     <p class="lead">Connect with trusted walkers for your beloved dog!</p>
 
     <a href="owner-dashboard.html" class="btn btn-outline-primary me-2">Owner Dashboard</a>
     <a href="walker-dashboard.html" class="btn btn-outline-success">Walker Dashboard</a>
+
+    <!-- Dog Table -->
+    <table v-if="dogs.length" class="table mt-4">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Size</th>
+          <th>Owner</th>
+          <th>Photo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="dog in dogs" :key="dog.dog_name">
+          <td>{{ dog.dog_name }}</td>
+          <td>{{ dog.size }}</td>
+          <td>{{ dog.owner_username }}</td>
+          <td><img :src="dog.photo" alt="Dog photo" width="150"></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <script>
     const { createApp } = Vue;
+
     createApp({
       data() {
         return {
-          message: 'Welcome to the Dog Walking Service!'
+          dogs: []
         };
+      },
+      async mounted() {
+        try {
+          const res = await fetch('/api/dogs');
+          const dogsList = await res.json();
+
+          for (let dog of dogsList) {
+            const imageRes = await fetch('https://dog.ceo/api/breeds/image/random');
+            const imageData = await imageRes.json();
+            dog.photo = imageData.message;
+          }
+
+          this.dogs = dogsList;
+        } catch (err) {
+          console.error('Could not load dog data:', err);
+        }
       }
     }).mount('#app');
   </script>
