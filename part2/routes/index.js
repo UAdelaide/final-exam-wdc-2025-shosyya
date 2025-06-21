@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models/db');
+const path = require('path');
 
 // homepage with login form
 router.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
+
 
 // process login form
 router.post('/login', async (req, res) => {
