@@ -17,17 +17,18 @@ app.use(session({
   saveUninitialized: false
 }));
 
-// serve Views
+// serve views
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Routes
+// routes
 const walkRoutes = require('./routes/walkRoutes');
 const userRoutes = require('./routes/userRoutes');
 
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
 
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Export the app instead of listening here
 module.exports = app;
