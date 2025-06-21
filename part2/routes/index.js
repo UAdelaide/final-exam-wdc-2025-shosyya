@@ -34,6 +34,9 @@ router.post('/login', async (req, res) => {
       } else {
         res.status(403).send('invalid role');
       }
+    } else {
+      res.send('Wrong username or password');
+    }
   } catch (err) {
     console.log('error with login:', err);
     res.status(500).send('error with login');
@@ -53,20 +56,21 @@ router.get('/logout', (req, res) => {
   });
 });
 
-// dashboard - owner
+// dashboard - owner (only used for owner dog data)
 router.get('/owner-dashboard', async (req, res) => {
-  const ownerId = req.session.user.user_id;
+  const ownerId = req.session.user?.user_id;
+  if (!ownerId) {
+    return res.redirect('/index.html');
+  }
 
   try {
     const [dogs] = await db.execute(
-      'SELECT dog_id, name FROM dogs WHERE owner_id = ?',
+      'SELECT dog_id, name FROM Dogs WHERE owner_id = ?',
       [ownerId]
     );
 
-    res.render('owner-dashboard', {
-      username: req.session.user.username,
-      dogs
-    });
+    // If you're not injecting data, send static file
+    res.sendFile(path.join(__dirname, '../public/owner-dashboard.html'));
   } catch (err) {
     console.log('error with dashboard:', err);
     res.status(500).send('error with dashboard');
@@ -75,12 +79,14 @@ router.get('/owner-dashboard', async (req, res) => {
 
 // dashboard - walker
 router.get('/walker-dashboard', (req, res) => {
-  res.render('walker-dashboard', {
-    username: req.session.user.username
-  });
+  if (!req.session.user) {
+    return res.redirect('/index.html');
+  }
+
+  res.sendFile(path.join(__dirname, '../public/walker-dashboard.html'));
 });
 
-// get current user for API
+// get current user for Vue frontend
 router.get('/api/users/me', (req, res) => {
   if (!req.session.user) {
     res.status(401).json({ error: 'Not logged in' });
