@@ -17,6 +17,10 @@ app.use(session({
   saveUninitialized: false
 }));
 
+// Serve Views
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
 const userRoutes = require('./routes/userRoutes');
